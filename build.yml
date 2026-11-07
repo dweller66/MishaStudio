@@ -1,0 +1,15 @@
+name: Build MishaClipStudio.exe
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install pyinstaller
+      - run: pyinstaller --onefile --windowed --name MishaClipStudio --add-data "app;app" MishaClipStudio.pyw
+      - uses: actions/upload-artifact@v4
+        with: { name: MishaClipStudio-exe, path: dist/MishaClipStudio.exe }
